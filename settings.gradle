@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "EwaLivecoding"
 include ':app'
+include ':api'
+include ':analytics'
