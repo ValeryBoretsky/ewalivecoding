@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        setContentView(R.layout.activity_main)
         containerId = findViewById<FragmentContainerView>(R.id.fragment_container).id
         openFirstListFragment()
     }

@@ -4,18 +4,28 @@ plugins {
 }
 
 android {
-    compileSdk = 33
+    namespace = "com.ewa.api"
+    compileSdk = 36
+
     defaultConfig {
         minSdk = 26
-        targetSdk = 33
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
         }
     }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.core:core-ktx:1.16.0")
 }

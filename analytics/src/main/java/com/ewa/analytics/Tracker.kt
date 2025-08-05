@@ -1,22 +1,18 @@
 package com.ewa.analytics
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
-import androidx.core.content.edit
+import com.ewa.analytics.mock.AnalyticsMockService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.coroutineContext
 
-object Tracker {
+class Tracker {
 
-    private var pref: SharedPreferences? = null
-
+    private val service = AnalyticsMockService()
 
     fun initTracker(context: Context) {
-        pref = context.getSharedPreferences("TrackerPreferences", Context.MODE_PRIVATE)
+        service.init(context = context)
     }
 
     fun trackEvent(event: Event) {
@@ -31,22 +27,12 @@ object Tracker {
                 "${event.name}_${event.bookId}"
             }
         }
-        Log.i("BookLiveCoding", "Track event: $message")
-        val key = System.currentTimeMillis().toString()
-        pref?.edit(commit = true) { putString(key, message) }
-        sendEvent()
-    }
 
-    private fun sendEvent() {
-        if (pref != null && pref!!.all.size > 2) {
-            val messages = pref!!.all.map { entry -> entry.key + "_" + entry.value }
-            CoroutineScope(Dispatchers.IO).launch {
-                AnalyticsApi.sendEventsToCloud(messages) {
-                    Log.i("BookLiveCoding", "Send event to cloud: ${messages.joinToString(", ")}}")
-                }
+        Log.i("BookLiveCoding", "Track event: $message")
+        CoroutineScope(Dispatchers.Default).launch {
+            service.sendEvent(event = message) { time ->
+                Log.i("BookLiveCoding", "Event was sent: $message, time: $time")
             }
-            pref!!.edit(commit = false) { this.clear() }
         }
     }
-
 }

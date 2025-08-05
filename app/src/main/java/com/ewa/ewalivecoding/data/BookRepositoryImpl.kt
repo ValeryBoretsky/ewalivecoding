@@ -5,26 +5,21 @@ import android.util.Log
 import com.ewa.api.Book
 import com.ewa.api.BookApi
 import com.ewa.ewalivecoding.R
-import com.ewa.ewalivecoding.domain.BookRepository
 
 class BookRepositoryImpl(
-    private val bookApi: BookApi,
-    private val context: Context,
+    val bookApi: BookApi,
+    val context: Context,
 ) : BookRepository {
 
-    companion object {
-        const val BOOK_LANGUAGE = "EN"
-    }
-
-    override fun getBooks(): List<Book> {
+    override suspend fun getBooks(): List<Book> {
         return bookApi
             .loadBooksApi(
-                context.getString(R.string.api_secret_key),
-                BOOK_LANGUAGE
-            ).let { books ->
+                key = context.getString(R.string.api_secret_key),
+                language = "EN"
+            ).also { books ->
                 Log.d(
                     "BookLiveCoding",
-                    "Books loaded. Size: ${books.size}, Books: ${books.map { it.id }}"
+                    "Books loaded. Books[${books.size}]: ${books.map { it.id }}"
                 )
                 books
             }
