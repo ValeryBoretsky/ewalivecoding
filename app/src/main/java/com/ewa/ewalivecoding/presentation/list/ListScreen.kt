@@ -1,6 +1,5 @@
 package com.ewa.ewalivecoding.presentation.list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,11 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.ewa.api.Book
 import com.ewa.ewalivecoding.domain.BookTime
 import java.util.Date
@@ -76,8 +75,8 @@ fun ListItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Book Image
-            Image(
-                painter = painterResource(bookTime.book.image),
+            AsyncImage(
+                model = bookTime.book.image,
                 contentDescription = "Book cover",
                 modifier = Modifier
                     .size(70.dp),
@@ -133,7 +132,7 @@ fun ItemPreview() {
         title = "The Great Gatsby",
         author = "F. Scott Fitzgerald",
         text = "Sample text...",
-        image = com.ewa.api.R.drawable.garsby
+        image = null
     )
     val testBookTime = BookTime(
         book = testBook,
@@ -156,7 +155,7 @@ fun ListScreenPreview() {
                 title = "The Great Gatsby",
                 author = "F. Scott Fitzgerald",
                 text = "Sample text...",
-                image = com.ewa.api.R.drawable.garsby
+                image = null
             ),
             openTime = System.currentTimeMillis() - 3600000
         ),
@@ -166,7 +165,7 @@ fun ListScreenPreview() {
                 title = "To Kill a Mockingbird",
                 author = "Harper Lee",
                 text = "Sample text...",
-                image = com.ewa.api.R.drawable.killerm
+                image = null
             ),
             openTime = -1L
         ),
@@ -176,7 +175,7 @@ fun ListScreenPreview() {
                 title = "1984",
                 author = "George Orwell",
                 text = "Sample text...",
-                image = com.ewa.api.R.drawable.f451
+                image = null
             ),
             openTime = System.currentTimeMillis() - 7200000
         )

@@ -2,8 +2,8 @@ package com.ewa.ewalivecoding.di
 
 import android.content.Context
 import com.ewa.analytics.Tracker
-import com.ewa.api.BookApi
-import com.ewa.api.BookApiBuilder
+import com.ewa.api.BooksApi
+import com.ewa.api.BooksApiBuilder
 import com.ewa.ewalivecoding.data.BookRepository
 import com.ewa.ewalivecoding.data.BookRepositoryImpl
 import dagger.Module
@@ -23,15 +23,17 @@ object AppModule {
     }
 
     @Provides
-    fun provideBookApi(): BookApi {
-        return BookApiBuilder.build()
+    fun provideBooksApi(
+        @ApplicationContext context: Context,
+    ): BooksApi {
+        return BooksApiBuilder.build(context)
     }
 
     @Provides
     fun provideBookRepository(
         @ApplicationContext context: Context,
-        bookApi: BookApi
+        booksApi: BooksApi
     ): BookRepository {
-        return BookRepositoryImpl(bookApi, context)
+        return BookRepositoryImpl(booksApi, context)
     }
 } 

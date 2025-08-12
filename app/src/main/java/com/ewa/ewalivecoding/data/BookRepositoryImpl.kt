@@ -3,17 +3,17 @@ package com.ewa.ewalivecoding.data
 import android.content.Context
 import android.util.Log
 import com.ewa.api.Book
-import com.ewa.api.BookApi
+import com.ewa.api.BooksApi
 import com.ewa.ewalivecoding.R
 
 class BookRepositoryImpl(
-    val bookApi: BookApi,
+    val booksApi: BooksApi,
     val context: Context,
 ) : BookRepository {
 
     override suspend fun getBooks(): List<Book> {
-        return bookApi
-            .loadBooksApi(
+        return booksApi
+            .getBooks(
                 key = context.getString(R.string.api_secret_key),
                 language = "EN"
             ).also { books ->
